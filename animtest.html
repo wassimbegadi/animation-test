@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation Lottie au Défilement</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.9/lottie.min.js"></script>
+    <style>
+        body, html {
+            height: 200%;
+            margin: 0;
+        }
+        #lottie {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div id="lottie"></div>
+    <script>
+        var animation = lottie.loadAnimation({
+            container: document.getElementById('lottie'),
+            renderer: 'svg',
+            loop: false,
+            autoplay: false,
+            path: 'animation.json' // Chemin relatif au fichier JSON
+        });
+
+        window.addEventListener('scroll', function() {
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            var maxScrollTop = document.documentElement.scrollHeight - window.innerHeight;
+            var scrollFraction = scrollTop / maxScrollTop;
+            var frame = Math.min(animation.totalFrames * scrollFraction, animation.totalFrames - 1);
+            animation.goToAndStop(frame, true);
+        });
+    </script>
+</body>
+</html>
